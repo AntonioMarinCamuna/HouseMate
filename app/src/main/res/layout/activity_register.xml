@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Correo"
-                android:inputType="textEmailAddress" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/contrasena"
@@ -46,6 +46,14 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Contraseña"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/direccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Dirección"
                 android:inputType="textPassword" />
 
             <Space
@@ -57,6 +65,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Registrarme" />
+
+            <ImageView
+                android:layout_width="300px"
+                android:layout_height="300px"
+                android:id="@+id/imagenUser"/>
+
+            <Button
+                android:id="@+id/selectorImg"
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:text="Imagen"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/userImg"
+                android:id="@+id/imagenUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -31,7 +31,7 @@
                     android:layout_margin="15dp">
 
                     <ImageView
-                        android:id="@+id/userAvatar"
+                        android:id="@+id/avatarUsuario"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
@@ -46,10 +46,10 @@
                 android:layout_marginTop="-5dp"
                 android:gravity="center"
                 android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@id/userImg">
+                app:layout_constraintTop_toBottomOf="@id/imagenUsuario">
 
                 <TextView
-                    android:id="@+id/currentUserName"
+                    android:id="@+id/nombreUsuario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -74,7 +74,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/userFullName"
+                    android:id="@+id/nombreCompletoUsuario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -98,7 +98,7 @@
                     android:textColor="@color/white" />
 
                 <TextView
-                    android:id="@+id/userBirth"
+                    android:id="@+id/fechaNacimientoUsuario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -121,7 +121,7 @@
                     android:textColor="@color/white" />
 
                 <TextView
-                    android:id="@+id/userMail"
+                    android:id="@+id/correoUsuario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="placeHolder"
@@ -136,7 +136,7 @@
                 android:gravity="end">
 
                 <Button
-                    android:id="@+id/logOutButton"
+                    android:id="@+id/cerrarSesion"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:text=""
