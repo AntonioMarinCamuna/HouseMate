@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "46317186071",
-    "project_id": "housemate-1cbf2",
-    "storage_bucket": "housemate-1cbf2.appspot.com"
+    "project_number": "384968573099",
+    "project_id": "housemate-v2",
+    "storage_bucket": "housemate-v2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:46317186071:android:ce7abf2133ac65fb970052",
+        "mobilesdk_app_id": "1:384968573099:android:5bf9eb195e36d7497bb7ee",
         "android_client_info": {
           "package_name": "com.example.housemate"
         }
       },
       "oauth_client": [
         {
-          "client_id": "46317186071-4639011oqb3365h8lgnaqi990b64dcpg.apps.googleusercontent.com",
+          "client_id": "384968573099-uqps12uv1lgu71n0tpijglgc8oud7s7m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAAe288gOdyS1bD0RnJvskLC6byj4FVnRw"
+          "current_key": "AIzaSyDHSJWAfEz_zMQFTMCJ1FXHMTvnWcDmHq0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "46317186071-4639011oqb3365h8lgnaqi990b64dcpg.apps.googleusercontent.com",
+              "client_id": "384968573099-uqps12uv1lgu71n0tpijglgc8oud7s7m.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

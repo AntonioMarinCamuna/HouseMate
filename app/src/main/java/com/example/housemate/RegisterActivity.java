@@ -27,6 +27,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -47,36 +49,30 @@ import io.grpc.Context;
 
 public class RegisterActivity extends AppCompatActivity{
 
-    Button btn_register;
-    Button selectorImg;
+    private Button btn_register;
+    private Button selectorImg;
 
-    Uri uri = null;
+    private Uri uri = null;
 
-    EditText name, email, password;
-    ImageView imagenUser;
+    private EditText name, email, password;
+    private ImageView imagenUser;
+    private String userImgName;
 
-    FirebaseFirestore mFirestore;
-    FirebaseAuth mAuth;
-    StorageReference sReference;
-    String storage_path = "userImgs/*";
-
-    Bitmap img_bitmap;
-
-    private static final int COD_SEL_STORAGE = 200;
-    private static final int COD_SEL_IMAGE = 300;
-
-    private Uri img_url;
-    String img = "photo";
-    String idImg;
+    private FirebaseFirestore mFirestore;
+    private DatabaseReference dbReference;
+    private FirebaseAuth mAuth;
+    private StorageReference sReference;
+    private String storage_path = "userImgs/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        this.setTitle("Registro");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mFirestore = FirebaseFirestore.getInstance();
+        getSupportActionBar().hide();
+
+        //mFirestore = FirebaseFirestore.getInstance();
+        dbReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         sReference = FirebaseStorage.getInstance().getReference();
 
@@ -90,21 +86,50 @@ public class RegisterActivity extends AppCompatActivity{
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String nameUser = name.getText().toString().trim();
                 String emailUser = email.getText().toString().trim();
                 String passUser = password.getText().toString().trim();
 
-                if (nameUser.isEmpty() || emailUser.isEmpty() || passUser.isEmpty() || uri.equals("")){
+                if (nameUser.isEmpty() || emailUser.isEmpty() || passUser.isEmpty()) {
+
                     Toast.makeText(RegisterActivity.this, "Complete los datos", Toast.LENGTH_SHORT).show();
+
+                }else if (uri == null){
+
+                    Toast.makeText(RegisterActivity.this, "Debes elegir una imagen de usuario", Toast.LENGTH_SHORT).show();
+
                 }else{
 
                     if(passUser.length() >= 6 & passUser.length() <= 12){
 
-                        registerUser(nameUser, emailUser, passUser);
+                        userImgName = imgNameGenerator();
+
+                        sReference = FirebaseStorage.getInstance().getReference("images/" + userImgName);
+                        sReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                registerUser(nameUser, emailUser, passUser);
+
+                            }
+
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                                Toast.makeText(RegisterActivity.this, "Error al subir la imagen", Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        });
 
                     }
+
                 }
+
             }
+
         });
 
         selectorImg.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +139,15 @@ public class RegisterActivity extends AppCompatActivity{
                 subirFoto();
 
             }
+
         });
+
+    }
+
+    private String imgNameGenerator(){
+
+        return (name.getText().toString() + email.getText().toString());
+
     }
 
     private void subirFoto(){
@@ -130,40 +163,45 @@ public class RegisterActivity extends AppCompatActivity{
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
+
                     if (result.getResultCode() == Activity.RESULT_OK){
 
                         Intent data = result.getData();
+                        assert data != null;
                         uri = data.getData();
                         imagenUser.setImageURI(uri);
 
-                    }
-                    else {
+                    }else {
 
                         Toast.makeText(RegisterActivity.this, "Accion cancelada por el usuario", Toast.LENGTH_SHORT).show();
 
                     }
+
                 }
+
             }
+
     );
 
     private void registerUser(String nameUser, String emailUser, String passUser) {
 
         mAuth.createUserWithEmailAndPassword(emailUser, passUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+
                 if(task.isSuccessful()){
 
                     String id = mAuth.getCurrentUser().getUid();
                     Map<String, Object> map = new HashMap<>();
-                    map.put("id", id);
                     map.put("name", nameUser);
                     map.put("email", emailUser);
                     map.put("password", passUser);
 
-                    mFirestore.collection("Users").document(id).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    dbReference.child("Users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
+                        public void onComplete(@NonNull Task<Void> task2) {
+                            if(task2.isSuccessful()){
 
                                 FirebaseUser user = mAuth.getCurrentUser();
 
@@ -180,15 +218,16 @@ public class RegisterActivity extends AppCompatActivity{
                         }
                     });
 
-                } else {
+                }else {
 
                     Toast.makeText(RegisterActivity.this, "Error al registrar el user.", Toast.LENGTH_SHORT).show();
 
                 }
+
             }
+
         });
 
     }
-
 
 }
