@@ -197,6 +197,7 @@ public class RegisterActivity extends AppCompatActivity{
                     map.put("name", nameUser);
                     map.put("email", emailUser);
                     map.put("password", passUser);
+                    map.put("img_name", userImgName);
 
                     dbReference.child("Users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
