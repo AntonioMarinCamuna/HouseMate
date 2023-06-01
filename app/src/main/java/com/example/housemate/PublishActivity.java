@@ -41,6 +41,8 @@ public class PublishActivity extends AppCompatActivity {
     Button b1;
     Button b2;
 
+    Button cancelDialog;
+
     private DatabaseReference dbReference;
     private FirebaseAuth mAuth;
     private StorageReference sReference;
@@ -112,9 +114,6 @@ public class PublishActivity extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent i = new Intent(PublishActivity.this, UserInfoActivity.class);
-                startActivity(i);
 
             }
         });

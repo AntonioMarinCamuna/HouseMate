@@ -44,8 +44,8 @@ import java.util.Map;
 import java.util.Objects;
 
 //import id.zelory.compressor.Compressor;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.grpc.Context;
-
 
 public class RegisterActivity extends AppCompatActivity{
 
@@ -55,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity{
     private Uri uri = null;
 
     private EditText name, email, password;
-    private ImageView imagenUser;
     private String userImgName;
 
     private FirebaseFirestore mFirestore;
@@ -63,6 +62,10 @@ public class RegisterActivity extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private StorageReference sReference;
     private String storage_path = "userImgs/";
+
+    private CircleImageView imagenUser;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +83,7 @@ public class RegisterActivity extends AppCompatActivity{
         email = findViewById(R.id.correo);
         password = findViewById(R.id.contrasena);
         btn_register = findViewById(R.id.btn_registro);
-        selectorImg = findViewById(R.id.selectorImg);
-        imagenUser = findViewById(R.id.imagenUser);
+        imagenUser = findViewById(R.id.imgPicker);
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity{
 
         });
 
-        selectorImg.setOnClickListener(new View.OnClickListener() {
+        imagenUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

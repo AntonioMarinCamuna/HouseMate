@@ -134,10 +134,11 @@ public class UserInfoActivity extends AppCompatActivity {
                     if(task.getResult().exists()){
 
                         DataSnapshot dSnapshot = task.getResult();
+
                         emailUser.setText(String.valueOf(dSnapshot.child("email").getValue()));
                         fechaNacimientoUser.setText(String.valueOf(dSnapshot.child("name").getValue()));
 
-                        sReference = FirebaseStorage.getInstance().getReference("images/" + dSnapshot.child("img_name").getValue());
+                        sReference = FirebaseStorage.getInstance().getReference("images/" + dSnapshot.child("img_name").getValue().toString());
                         try {
 
                             File localFile = File.createTempFile("tempfile", ".jpg");

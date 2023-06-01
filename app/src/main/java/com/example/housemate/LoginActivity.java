@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,13 +38,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getSupportActionBar().hide();
+
         mAuth = FirebaseAuth.getInstance();
 
         email = findViewById(R.id.correoLogin);
         password = findViewById(R.id.contrasenaLogin);
-        btn_login = findViewById(R.id.btn_login);
-        btn_register = findViewById(R.id.btn_registro);
-        prueba = findViewById(R.id.prueba);
+        btn_login = findViewById(R.id.loginButton);
+        btn_register = findViewById(R.id.registerButton);
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(user.isEmailVerified()){
 
                         finish();
-                        startActivity(new Intent(LoginActivity.this, PublishActivity.class));
+                        startActivity(new Intent(LoginActivity.this, PublishingActivity.class));
 
                     } else {
 
