@@ -65,8 +65,6 @@ public class RegisterActivity extends AppCompatActivity{
 
     private CircleImageView imagenUser;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

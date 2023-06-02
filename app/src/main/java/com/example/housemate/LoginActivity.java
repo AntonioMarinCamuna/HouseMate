@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(user.isEmailVerified()){
 
                         finish();
-                        startActivity(new Intent(LoginActivity.this, PublishingActivity.class));
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
                     } else {
 
