@@ -6,6 +6,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -31,38 +33,85 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Elementos globales
+    private StorageReference sReference;
+    private DatabaseReference dbReference;
+
     //Elementos MainActivity
-    FloatingActionButton button;
+    private FloatingActionButton button;
+    private RecyclerView postRecycler;
+    private RecyclerAdapter rAdapter;
+    private ArrayList<Room> roomList;
+    private Button searchButton;
+    private TextView cityFilter, priceFilter;
 
     //Elementos PublishDialog
     private Uri uri = null;
-    Button cancelButton, publishButton;
-    ImageView roomImagePicker;
-    TextView postTitle, postCity, postAddress, postDescription, postPrice;
-    String postImgName;
+    private Button cancelButton, publishButton;
+    private ImageView roomImagePicker;
+    private TextView postTitle, postCity, postAddress, postDescription, postPrice;
+    private String postImgName;
     private FirebaseAuth mAuth;
-    private StorageReference sReference;
-    private DatabaseReference dbReference;
-    Dialog dialog;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+
+        dbReference = FirebaseDatabase.getInstance().getReference();
+
+        postRecycler = findViewById(R.id.postRecycler);
+        postRecycler.setLayoutManager(new LinearLayoutManager(this));
+
+        cityFilter = findViewById(R.id.cityFilter);
+        priceFilter = findViewById(R.id.priceFilter);
+
+        roomList = new ArrayList<Room>();
+        rAdapter = new RecyclerAdapter(this, roomList, new RecyclerAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(Room room) {
+
+                Intent i = new Intent(MainActivity.this, UserInfoActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        postRecycler.setAdapter(rAdapter);
+
+        searchButton = findViewById(R.id.searchButton);
+
         button = findViewById(R.id.postingButton);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                loadRoom(cityFilter.getText().toString(), priceFilter.getText().toString());
+
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +187,15 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            postRoom(title, city, address, description, price, publisherId);
+                            sReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+
+                                    String avatarUrl = uri.toString();
+                                    postRoom(title, city, address, description, price, publisherId, avatarUrl);
+
+                                }
+                            });
 
                         }
 
@@ -163,7 +220,43 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void postRoom(String title, String city, String address, String description, String price, String publisherId){
+    private void loadRoom(String city, String maxPrice){
+
+        dbReference.child("Posts").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                roomList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                    Room room = dataSnapshot.getValue(Room.class);
+
+                    double price = Double.parseDouble(room.getPrice());
+
+                    if(city.isEmpty() && maxPrice.isEmpty() && room.getBooked().equals("no")){
+
+                        roomList.add(room);
+
+                    } else if(room.getCity().toLowerCase().equals(city.toLowerCase()) && price <= Double.parseDouble(maxPrice) && room.getBooked().equals("no")){
+
+                        roomList.add(room);
+
+                    }
+
+                }
+                rAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void postRoom(String title, String city, String address, String description, String price, String publisherId, String postImage){
 
         Map<String, Object> map = new HashMap<>();
         map.put("title", title);
@@ -172,6 +265,8 @@ public class MainActivity extends AppCompatActivity {
         map.put("description", description);
         map.put("price", price);
         map.put("publisher", publisherId);
+        map.put("image", postImage);
+        map.put("booked", "no");
 
         dbReference.child("Posts").child(postImgName).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

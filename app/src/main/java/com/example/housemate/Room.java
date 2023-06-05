@@ -5,19 +5,33 @@ import java.util.ArrayList;
 public class Room {
 
     private String address;
-    private String title;
+    private String city;
     private String description;
-    private String image;
-    private double price;
-    private String roomId;
+    private String price;
     private String publisherId;
+    private String title;
+    private String image;
+    private String booked;
 
-    private ArrayList<String> imageGallery;
+    //private String image;
+    //private String roomId;
+
+
+
+    //private ArrayList<String> imageGallery;
 
     public Room(){
 
 
 
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getAddress() {
@@ -44,36 +58,12 @@ public class Room {
         this.description = description;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
-    }
-
-    public ArrayList<String> getImageGallery() {
-        return imageGallery;
-    }
-
-    public void setImageGallery(ArrayList<String> imageGallery) {
-        this.imageGallery = imageGallery;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(String roomId) {
-        this.roomId = roomId;
     }
 
     public String getPublisherId() {
@@ -82,5 +72,21 @@ public class Room {
 
     public void setPublisherId(String publisherId) {
         this.publisherId = publisherId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String img) {
+        this.image = img;
+    }
+
+    public String getBooked() {
+        return booked;
+    }
+
+    public void setBooked(String booked) {
+        this.booked = booked;
     }
 }

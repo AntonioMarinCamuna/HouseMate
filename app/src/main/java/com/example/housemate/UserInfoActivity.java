@@ -72,7 +72,6 @@ public class UserInfoActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser().getUid();
 
         readData();
-        readMessages();
 
         /*DocumentReference docRef = mFirestore.collection("Users").document(user);
         docRef.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
