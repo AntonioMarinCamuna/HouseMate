@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     private StorageReference sReference;
     private DatabaseReference dbReference;
 
+    private FirebaseAuth mAuth;
+
     //Elementos MainActivity
     private FloatingActionButton button;
     private RecyclerView postRecycler;
@@ -69,8 +72,11 @@ public class MainActivity extends AppCompatActivity {
     private ImageView roomImagePicker;
     private TextView postTitle, postCity, postAddress, postDescription, postPrice;
     private String postImgName;
-    private FirebaseAuth mAuth;
     private Dialog dialog;
+
+    //Elementos PostDialog (elementos extra, algunos son compartidos con el otro dialog)
+    private Button bookButton;
+    private TextView postPublisher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +93,14 @@ public class MainActivity extends AppCompatActivity {
         cityFilter = findViewById(R.id.cityFilter);
         priceFilter = findViewById(R.id.priceFilter);
 
+        mAuth = FirebaseAuth.getInstance();
+
         roomList = new ArrayList<Room>();
         rAdapter = new RecyclerAdapter(this, roomList, new RecyclerAdapter.ItemClickListener() {
             @Override
             public void onItemClick(Room room) {
 
-                Intent i = new Intent(MainActivity.this, UserInfoActivity.class);
-                startActivity(i);
+                openPostDialog(room);
 
             }
         });
@@ -108,7 +115,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                loadRoom(cityFilter.getText().toString(), priceFilter.getText().toString());
+                if (priceFilter.getText().toString().isEmpty()){
+                    loadRoom(cityFilter.getText().toString(), "0");
+                } else {
+                    loadRoom(cityFilter.getText().toString(), priceFilter.getText().toString());
+                }
 
             }
         });
@@ -116,13 +127,91 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog();
+                openPublishDialog();
             }
         });
 
     }
 
-    private void openDialog() {
+    private void openPostDialog(Room room){
+
+        dialog = new Dialog(MainActivity.this);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View customDialog = inflater.inflate(R.layout.fragment_post_info, null);
+
+        postTitle = customDialog.findViewById(R.id.roomTitle);
+        postCity = customDialog.findViewById(R.id.roomCity);
+        postDescription = customDialog.findViewById(R.id.roomDescription);
+        postPublisher = customDialog.findViewById(R.id.roomPublisher);
+        postPrice = customDialog.findViewById(R.id.roomPrice);
+        roomImagePicker = customDialog.findViewById(R.id.roomImage);
+
+        bookButton = customDialog.findViewById(R.id.bookButton);
+
+        String postId = room.getPostId();
+
+        postTitle.setText(room.getTitle().toString());
+        postCity.setText(room.getCity().toString());
+        postDescription.setText(room.getDescription().toString());
+
+        dbReference.child("Users").child(room.getPublisherId()).child("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String publisherName = snapshot.getValue(String.class);
+                postPublisher.setText(publisherName);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        postPrice.setText(room.getPrice().toString());
+
+        Glide.with(roomImagePicker.getContext()).load(room.getImage()).into(roomImagePicker);
+
+        bookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mAuth.getCurrentUser().getUid().equals(room.getPublisherId())){
+
+                    Toast.makeText(MainActivity.this, "No puedes reservar una habitacion publicada por ti", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    room.setBooked("yes");
+
+                    HashMap Room = new HashMap();
+                    Room.put("booked", "yes");
+
+                    dbReference.child("Posts").child(postId).updateChildren(Room).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+
+                            if(task.isSuccessful()){
+
+                                Toast.makeText(MainActivity.this, "Habitacion reservada con exito", Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        }
+                    });
+
+                }
+
+            }
+        });
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(customDialog);
+        dialog.show();
+
+    }
+
+    private void openPublishDialog() {
 
         dialog = new Dialog(MainActivity.this);
 
@@ -230,16 +319,31 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
 
                     Room room = dataSnapshot.getValue(Room.class);
-
                     double price = Double.parseDouble(room.getPrice());
 
-                    if(city.isEmpty() && maxPrice.isEmpty() && room.getBooked().equals("no")){
+                    if(city.isEmpty() && maxPrice.equals("0") && room.getBooked().equals("no")){
 
                         roomList.add(room);
 
-                    } else if(room.getCity().toLowerCase().equals(city.toLowerCase()) && price <= Double.parseDouble(maxPrice) && room.getBooked().equals("no")){
+                    }else if(room.getCity().toLowerCase().equals(city.toLowerCase()) && price <= Double.parseDouble(maxPrice) && room.getBooked().equals("no")){
 
                         roomList.add(room);
+
+                    }else if(city.isEmpty()){
+
+                        if(price <= Double.parseDouble(maxPrice) && room.getBooked().equals("no")){
+
+                            roomList.add(room);
+
+                        }
+
+                    }else if(maxPrice.equals("0")){
+
+                        if(room.getCity().toLowerCase().equals(city.toLowerCase()) && room.getBooked().equals("no")){
+
+                            roomList.add(room);
+
+                        }
 
                     }
 
@@ -264,9 +368,10 @@ public class MainActivity extends AppCompatActivity {
         map.put("address", address);
         map.put("description", description);
         map.put("price", price);
-        map.put("publisher", publisherId);
+        map.put("publisherId", publisherId);
         map.put("image", postImage);
         map.put("booked", "no");
+        map.put("postId", postImgName);
 
         dbReference.child("Posts").child(postImgName).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

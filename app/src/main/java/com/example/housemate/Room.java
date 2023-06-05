@@ -12,11 +12,10 @@ public class Room {
     private String title;
     private String image;
     private String booked;
+    private String postId;
 
     //private String image;
     //private String roomId;
-
-
 
     //private ArrayList<String> imageGallery;
 
@@ -88,5 +87,13 @@ public class Room {
 
     public void setBooked(String booked) {
         this.booked = booked;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
 }
