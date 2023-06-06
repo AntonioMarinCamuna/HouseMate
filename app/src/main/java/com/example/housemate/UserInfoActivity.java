@@ -73,14 +73,18 @@ public class UserInfoActivity extends AppCompatActivity {
 
     private Button logOutButton, dataChangeButton;
 
-    private Dialog dialog;
+//    //Elementos del dataChangeDialog
+//    private TextView userNameDialog, userPasswordDialog, userUsernameDialog;
+//    private ImageView userAvatarDialog;
+//    private Button dataChangeButtonDialog;
+//    private Uri uri = null;
+//    private String userImgName;
 
-    //Elementos del dataChangeDialog
-    private TextView userNameDialog, userPasswordDialog, userUsernameDialog;
-    private ImageView userAvatarDialog;
-    private Button dataChangeButtonDialog;
-    private Uri uri = null;
-    private String userImgName;
+    //Elementos Dialog
+    private Button cancelButton;
+    private ImageView roomImagePicker;
+    private TextView postTitle, postCity, postAddress, postDescription, postPrice;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +111,7 @@ public class UserInfoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Room room) {
 
-                Toast.makeText(UserInfoActivity.this, "Hola", Toast.LENGTH_SHORT).show();
+                openPostDialog(room);
 
             }
         });
@@ -182,6 +186,79 @@ public class UserInfoActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void openPostDialog(Room room){
+
+        dialog = new Dialog(UserInfoActivity.this);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View customDialog = inflater.inflate(R.layout.fragment_booked_post, null);
+
+        postTitle = customDialog.findViewById(R.id.roomTitle);
+        postCity = customDialog.findViewById(R.id.roomCity);
+        postDescription = customDialog.findViewById(R.id.roomDescription);
+        postAddress = customDialog.findViewById(R.id.roomAddress);
+        postPrice = customDialog.findViewById(R.id.roomPrice);
+        roomImagePicker = customDialog.findViewById(R.id.roomImage);
+
+        cancelButton = customDialog.findViewById(R.id.bookButton);
+        cancelButton.setText("Eliminar habitación");
+
+        String postId = room.getPostId();
+
+        postTitle.setText(room.getTitle().toString());
+        postCity.setText(room.getCity().toString());
+        postAddress.setText(room.getAddress().toString());
+        postDescription.setText(room.getDescription().toString());
+
+        postPrice.setText(room.getPrice().toString());
+
+        Glide.with(roomImagePicker.getContext()).load(room.getImage()).into(roomImagePicker);
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(!mAuth.getCurrentUser().getUid().equals(room.getPublisherId())){
+
+                    Toast.makeText(UserInfoActivity.this, "No puedes eliminar una habitacion publicada por otra persona", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    if (room.getBooked().equals("yes")){
+
+                        Toast.makeText(UserInfoActivity.this, "No puedes borrar una habitación reservada", Toast.LENGTH_SHORT).show();
+
+                    } else{
+
+                        dbReference.child("Posts").child(postId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                sReference.child("roomsImages").child(room.getTitle()+room.getCity()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+
+                                        dialog.cancel();
+                                        Toast.makeText(UserInfoActivity.this, "Habitación eliminada correctamente", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }
+
+                }
+
+            }
+        });
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(customDialog);
+        dialog.show();
 
     }
 

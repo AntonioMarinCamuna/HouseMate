@@ -78,7 +78,7 @@
                 android:padding="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/custom_imput"
-                android:hint="Dirección"
+                android:hint="Nombre de usuario"
                 android:inputType="textPersonName" />
 
             <EditText

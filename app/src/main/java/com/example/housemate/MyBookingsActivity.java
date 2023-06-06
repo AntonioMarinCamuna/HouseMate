@@ -5,12 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MyBookingsActivity extends AppCompatActivity {
 
@@ -33,6 +43,12 @@ public class MyBookingsActivity extends AppCompatActivity {
     private ArrayList<Room> roomList;
     private String user;
     private ImageView mainPage, userPage;
+
+    //Elementos Dialog
+    private Button cancelButton;
+    private ImageView roomImagePicker;
+    private TextView postTitle, postCity, postAddress, postDescription, postPrice;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +70,7 @@ public class MyBookingsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Room room) {
 
-                Toast.makeText(MyBookingsActivity.this, "Hola", Toast.LENGTH_SHORT).show();
+                openPostDialog(room);
 
             }
         });
@@ -84,6 +100,77 @@ public class MyBookingsActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void openPostDialog(Room room){
+
+        dialog = new Dialog(MyBookingsActivity.this);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View customDialog = inflater.inflate(R.layout.fragment_booked_post, null);
+
+        postTitle = customDialog.findViewById(R.id.roomTitle);
+        postCity = customDialog.findViewById(R.id.roomCity);
+        postDescription = customDialog.findViewById(R.id.roomDescription);
+        postAddress = customDialog.findViewById(R.id.roomAddress);
+        postPrice = customDialog.findViewById(R.id.roomPrice);
+        roomImagePicker = customDialog.findViewById(R.id.roomImage);
+
+        cancelButton = customDialog.findViewById(R.id.bookButton);
+
+        String postId = room.getPostId();
+
+        postTitle.setText(room.getTitle().toString());
+        postCity.setText(room.getCity().toString());
+        postAddress.setText(room.getAddress().toString());
+        postDescription.setText(room.getDescription().toString());
+
+        postPrice.setText(room.getPrice().toString());
+
+        Glide.with(roomImagePicker.getContext()).load(room.getImage()).into(roomImagePicker);
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mAuth.getCurrentUser().getUid().equals(room.getPublisherId())){
+
+                    Toast.makeText(MyBookingsActivity.this, "No puedes reservar una habitacion publicada por ti", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    String bookingUser = mAuth.getCurrentUser().getUid();
+
+                    room.setBooked("no");
+                    room.setBookedBy("");
+
+                    HashMap Room = new HashMap();
+                    Room.put("booked", "no");
+                    Room.put("bookedBy", "");
+
+                    dbReference.child("Posts").child(postId).updateChildren(Room).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+
+                            if(task.isSuccessful()){
+
+                                Toast.makeText(MyBookingsActivity.this, "Reserva cancelada con exito", Toast.LENGTH_SHORT).show();
+                                dialog.cancel();
+
+                            }
+
+                        }
+                    });
+
+                }
+
+            }
+        });
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(customDialog);
+        dialog.show();
 
     }
 

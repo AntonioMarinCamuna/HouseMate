@@ -158,6 +158,10 @@ public class RegisterActivity extends AppCompatActivity{
                             }
                         });
 
+                    } else{
+
+                        Toast.makeText(RegisterActivity.this, "La contraseña debe ser de al menos 6 caracteres y máximo 12.", Toast.LENGTH_SHORT).show();
+
                     }
 
                 }

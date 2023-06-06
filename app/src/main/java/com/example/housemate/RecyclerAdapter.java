@@ -1,8 +1,11 @@
 package com.example.housemate;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,10 +33,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     private Context context;
 
     private ArrayList<Room> roomList;
-
-    private StorageReference sReference;
     private ItemClickListener mItemListener;
-
 
     public RecyclerAdapter(Context context, ArrayList<Room> roomList, ItemClickListener itemClickListener) {
         this.context = context;
@@ -75,7 +76,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             mItemListener.onItemClick(roomList.get(position));
         });
 
-
     }
 
     @Override
@@ -91,6 +91,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder{
 
+        //Elementos del recycler
         private ImageView roomImage;
         private TextView roomTitle, roomCity, roomPrice, roomDescription, isReserved;
         private Button bookingInfo;
@@ -108,6 +109,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         }
     }
-
 
 }
