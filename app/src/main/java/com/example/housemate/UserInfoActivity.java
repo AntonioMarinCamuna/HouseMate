@@ -64,7 +64,7 @@ public class UserInfoActivity extends AppCompatActivity {
     private DatabaseReference dbReference;
 
     private TextView emailUser, userName, userUsername;
-    private ImageView userAvatar;
+    private ImageView userAvatar, mainPage, myBookings;
     private String user;
 
     private RecyclerView postRecycler;
@@ -95,6 +95,9 @@ public class UserInfoActivity extends AppCompatActivity {
         emailUser = findViewById(R.id.userMail);
         userAvatar = findViewById(R.id.userAvatar);
         userUsername = findViewById(R.id.userUsername);
+
+        mainPage = findViewById(R.id.mainMenu);
+        myBookings = findViewById(R.id.myBookings);
 
         postRecycler = findViewById(R.id.postsRecycler);
         postRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -130,6 +133,26 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         });
 
+        mainPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(UserInfoActivity.this, MainActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        myBookings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(UserInfoActivity.this, MyBookingsActivity.class);
+                startActivity(i);
+
+            }
+        });
+
     }
 
     private void loadRoom(){
@@ -138,6 +161,7 @@ public class UserInfoActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                roomList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
 
                     Room room = dataSnapshot.getValue(Room.class);

@@ -35,20 +35,41 @@
                 android:padding="10dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/postTitle"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PlaceHolder"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_height="wrap_content" >
 
-                <TextView
-                    android:id="@+id/postCity"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/postTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PlaceHolder"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:layout_marginRight="10dp"/>
+
+                    <TextView
+                        android:id="@+id/postCity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PlaceHolder"
+                        android:layout_marginRight="10dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="PlaceHolder"/>
+                    android:layout_gravity="right">
+
+                    <TextView
+                        android:id="@+id/isReserved"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Reservado"
+                        android:visibility="invisible"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -86,6 +107,14 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/bookingInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Información de la reserva"
+        android:backgroundTint="#ff8000"
+        android:layout_gravity="center"/>
 
     <View
         android:id="@+id/divider2"

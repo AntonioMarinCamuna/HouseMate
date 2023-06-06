@@ -145,6 +145,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        myBookingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(MainActivity.this, MyBookingsActivity.class);
+                startActivity(i);
+
+            }
+        });
+
     }
 
     private void openPostDialog(Room room){

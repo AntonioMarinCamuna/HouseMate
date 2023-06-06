@@ -7,6 +7,7 @@ import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,6 +59,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         holder.roomPrice.setText(room.getPrice() + "");
         holder.roomDescription.setText(room.getDescription());
 
+        if (room.getBooked().equals("yes")){
+
+            holder.isReserved.setVisibility(View.VISIBLE);
+            holder.bookingInfo.setVisibility(View.VISIBLE);
+
+        }else{
+
+            holder.isReserved.setVisibility(View.INVISIBLE);
+            holder.bookingInfo.setVisibility(View.INVISIBLE);
+
+        }
+
         holder.itemView.setOnClickListener(view -> {
             mItemListener.onItemClick(roomList.get(position));
         });
@@ -79,7 +92,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView roomImage;
-        private TextView roomTitle, roomCity, roomPrice, roomDescription;
+        private TextView roomTitle, roomCity, roomPrice, roomDescription, isReserved;
+        private Button bookingInfo;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +103,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             roomCity = itemView.findViewById(R.id.postCity);
             roomPrice = itemView.findViewById(R.id.postPrice);
             roomDescription = itemView.findViewById(R.id.postDescription);
+            isReserved = itemView.findViewById(R.id.isReserved);
+            bookingInfo = itemView.findViewById(R.id.bookingInfo);
 
         }
     }
