@@ -121,12 +121,15 @@ public class MyBookingsActivity extends AppCompatActivity {
 
         String postId = room.getPostId();
 
-        postTitle.setText(room.getTitle().toString());
-        postCity.setText(room.getCity().toString());
-        postAddress.setText(room.getAddress().toString());
-        postDescription.setText(room.getDescription().toString());
+        postTitle.setText(room.getTitle());
+        postCity.setText(room.getCity());
+        postAddress.setText(room.getAddress());
 
-        postPrice.setText(room.getPrice().toString());
+        postDescription.setText(room.getDescription());
+
+        double totalPrice = Integer.parseInt(room.getBookedDays()) * Double.parseDouble(room.getPrice());
+
+        postPrice.setText(totalPrice + "");
 
         Glide.with(roomImagePicker.getContext()).load(room.getImage()).into(roomImagePicker);
 
@@ -144,10 +147,12 @@ public class MyBookingsActivity extends AppCompatActivity {
 
                     room.setBooked("no");
                     room.setBookedBy("");
+                    room.setBookedDays("");
 
                     HashMap Room = new HashMap();
                     Room.put("booked", "no");
                     Room.put("bookedBy", "");
+                    Room.put("bookedDays", "");
 
                     dbReference.child("Posts").child(postId).updateChildren(Room).addOnCompleteListener(new OnCompleteListener() {
                         @Override

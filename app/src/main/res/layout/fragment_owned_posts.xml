@@ -112,12 +112,12 @@
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Estancia máxima:"
+                android:text="Dirección:"
                 android:textColor="@color/black"
                 android:padding="10dp"/>
 
             <TextView
-                android:id="@+id/maximunDays"
+                android:id="@+id/roomAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -137,12 +137,12 @@
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Arrendador:"
+                android:text="Arrendatario:"
                 android:textColor="@color/black"
                 android:padding="10dp"/>
 
             <TextView
-                android:id="@+id/roomPublisher"
+                android:id="@+id/bookedBy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -166,7 +166,7 @@
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
                 android:ems="10"
-                android:text="Precio"
+                android:text="Precio final:"
                 android:inputType="text"
                 android:padding="10dp" />
 
@@ -185,39 +185,13 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/black"
-                android:ems="10"
-                android:text="Estancia deseada:"
-                android:padding="10dp" />
-
-            <EditText
-                android:id="@+id/desiredDays"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:inputType="number"
-                android:padding="10dp"/>
-
-        </LinearLayout>
-
         <Button
             android:id="@+id/bookButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#ff8000"
-            android:text="Reservar"
-            android:layout_gravity="center"
-            android:inputType="numberDecimal"/>
+            android:text="Eliminar habitación"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

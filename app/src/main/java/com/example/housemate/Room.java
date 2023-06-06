@@ -14,6 +14,8 @@ public class Room {
     private String booked;
     private String postId;
     private String bookedBy;
+    private String maxDays;
+    private String bookedDays;
 
     public Room(){
 
@@ -101,4 +103,19 @@ public class Room {
         this.bookedBy = bookedBy;
     }
 
+    public String getMaxDays() {
+        return maxDays;
+    }
+
+    public void setMaxDays(String maxDays) {
+        this.maxDays = maxDays;
+    }
+
+    public String getBookedDays() {
+        return bookedDays;
+    }
+
+    public void setBookedDays(String bookedDays) {
+        this.bookedDays = bookedDays;
+    }
 }

@@ -72,13 +72,14 @@ public class MainActivity extends AppCompatActivity {
     private Uri uri = null;
     private Button cancelButton, publishButton;
     private ImageView roomImagePicker;
-    private TextView postTitle, postCity, postAddress, postDescription, postPrice;
+    private TextView postTitle, postCity, postAddress, postDescription, postPrice, maximunDays;
     private String postImgName;
     private Dialog dialog;
 
     //Elementos PostDialog (elementos extra, algunos son compartidos con el otro dialog)
     private Button bookButton;
     private TextView postPublisher;
+    private EditText desiredDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,14 +171,17 @@ public class MainActivity extends AppCompatActivity {
         postPublisher = customDialog.findViewById(R.id.roomPublisher);
         postPrice = customDialog.findViewById(R.id.roomPrice);
         roomImagePicker = customDialog.findViewById(R.id.roomImage);
+        maximunDays = customDialog.findViewById(R.id.maximunDays);
+        desiredDays = customDialog.findViewById(R.id.desiredDays);
 
         bookButton = customDialog.findViewById(R.id.bookButton);
 
         String postId = room.getPostId();
 
-        postTitle.setText(room.getTitle().toString());
-        postCity.setText(room.getCity().toString());
-        postDescription.setText(room.getDescription().toString());
+        postTitle.setText(room.getTitle());
+        postCity.setText(room.getCity());
+        postDescription.setText(room.getDescription());
+        maximunDays.setText(room.getMaxDays() + " noches");
 
         dbReference.child("Users").child(room.getPublisherId()).child("name").addValueEventListener(new ValueEventListener() {
             @Override
@@ -192,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        postPrice.setText(room.getPrice().toString());
+        postPrice.setText(room.getPrice());
 
         Glide.with(roomImagePicker.getContext()).load(room.getImage()).into(roomImagePicker);
 
@@ -206,28 +210,45 @@ public class MainActivity extends AppCompatActivity {
 
                 }else {
 
-                    String bookingUser = mAuth.getCurrentUser().getUid();
+                    if(desiredDays.getText().toString().equals("") || desiredDays.getText().toString().equals(" ")){
 
-                    room.setBooked("yes");
-                    room.setBookedBy(bookingUser);
+                        Toast.makeText(MainActivity.this, "Debes introducir un numero de dias si quieres realizar la reserva.", Toast.LENGTH_SHORT).show();
 
-                    HashMap Room = new HashMap();
-                    Room.put("booked", "yes");
-                    Room.put("bookedBy", bookingUser);
+                    }else{
 
-                    dbReference.child("Posts").child(postId).updateChildren(Room).addOnCompleteListener(new OnCompleteListener() {
-                        @Override
-                        public void onComplete(@NonNull Task task) {
+                        if(Integer.parseInt(desiredDays.getText().toString()) > 0 && Integer.parseInt(desiredDays.getText().toString()) <= Integer.parseInt(room.getMaxDays())){
 
-                            if(task.isSuccessful()){
+                            String bookingUser = mAuth.getCurrentUser().getUid();
 
-                                Toast.makeText(MainActivity.this, "Habitacion reservada con exito", Toast.LENGTH_SHORT).show();
-                                dialog.cancel();
+                            room.setBooked("yes");
+                            room.setBookedBy(bookingUser);
 
-                            }
+                            HashMap Room = new HashMap();
+                            Room.put("booked", "yes");
+                            Room.put("bookedBy", bookingUser);
+                            Room.put("bookedDays", desiredDays.getText().toString());
+
+                            dbReference.child("Posts").child(postId).updateChildren(Room).addOnCompleteListener(new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+
+                                    if(task.isSuccessful()){
+
+                                        Toast.makeText(MainActivity.this, "Habitacion reservada con exito", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
+
+                                    }
+
+                                }
+                            });
+
+                        }else{
+
+                            Toast.makeText(MainActivity.this, "El numero de dias introducidos no es valido.", Toast.LENGTH_SHORT).show();
 
                         }
-                    });
+
+                    }
 
                 }
 
@@ -256,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
         postAddress = customDialog.findViewById(R.id.roomAddress);
         postDescription = customDialog.findViewById(R.id.roomDescription);
         postPrice = customDialog.findViewById(R.id.roomPrice);
+        maximunDays = customDialog.findViewById(R.id.maxDays);
 
         mAuth = FirebaseAuth.getInstance();
         sReference = FirebaseStorage.getInstance().getReference();
@@ -283,9 +305,11 @@ public class MainActivity extends AppCompatActivity {
                 String city = postCity.getText().toString().trim();
                 String address = postAddress.getText().toString().trim();
                 String description = postDescription.getText().toString().trim();
-                String price = postPrice.getText().toString().trim(); //HACER COMPROBACIÓN DE VALORES VÁLIDOS
+                String price = postPrice.getText().toString().trim();
+                String maxDays = maximunDays.getText().toString().trim();
+                //HACER COMPROBACIÓN DE VALORES VÁLIDOS
 
-                if (title.isEmpty() || city.isEmpty() || address.isEmpty() || description.isEmpty() || price.isEmpty()) {
+                if (title.isEmpty() || city.isEmpty() || address.isEmpty() || description.isEmpty() || price.isEmpty() || maxDays.isEmpty()){
 
                     Toast.makeText(MainActivity.this, "Complete los datos", Toast.LENGTH_SHORT).show();
 
@@ -310,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
 
                                     String avatarUrl = uri.toString();
-                                    postRoom(title, city, address, description, price, publisherId, avatarUrl);
+                                    postRoom(title, city, address, description, price, publisherId, avatarUrl, maxDays);
 
                                 }
                             });
@@ -389,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void postRoom(String title, String city, String address, String description, String price, String publisherId, String postImage){
+    private void postRoom(String title, String city, String address, String description, String price, String publisherId, String postImage, String maxDays){
 
         Map<String, Object> map = new HashMap<>();
         map.put("title", title);
@@ -401,6 +425,8 @@ public class MainActivity extends AppCompatActivity {
         map.put("image", postImage);
         map.put("booked", "no");
         map.put("bookedBy", "");
+        map.put("maxDays", maxDays);
+        map.put("bookedDays", "");
         map.put("postId", postImgName);
 
         dbReference.child("Posts").child(postImgName).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {

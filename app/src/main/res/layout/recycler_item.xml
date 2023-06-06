@@ -12,7 +12,7 @@
         <LinearLayout
             android:id="@+id/imageLayout"
             android:layout_width="105dp"
-            android:layout_height="match_parent"
+            android:layout_height="105dp"
             android:padding="5dp">
 
             <ImageView
@@ -31,7 +31,7 @@
             <LinearLayout
                 android:id="@+id/postHeader"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:padding="10dp"
                 android:orientation="horizontal">
 
@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:text="PlaceHolder"
                         android:textColor="@color/black"
-                        android:textSize="20dp"
+                        android:textSize="15dp"
                         android:layout_marginRight="10dp"/>
 
                     <TextView
@@ -60,7 +60,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right">
+                    android:gravity="right">
 
                     <TextView
                         android:id="@+id/isReserved"
@@ -80,26 +80,53 @@
                 android:orientation="horizontal"
                 android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/postDescription"
-                    android:layout_width="161dp"
-                    android:layout_height="wrap_content"
-                    android:text="PlaceHolder" />
-
-                <TextView
-                    android:id="@+id/postPrice"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="10dp"
-                    android:text="PlaceHolder" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/postDescription"
+                        android:layout_width="161dp"
+                        android:layout_height="wrap_content"
+                        android:text="PlaceHolder" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
+
+                    <TextView
+                        android:id="@+id/postPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="PlaceHolder"/>
+
+                    <TextView
+                        android:id="@+id/euro"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" €/noche"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/euro"
+                    android:id="@+id/maxDaysAvailable"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" €/mes"
-                    android:layout_gravity="bottom"/>
+                    android:text="PlaceHolder" />
 
 
             </LinearLayout>
@@ -107,14 +134,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/bookingInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Información de la reserva"
-        android:backgroundTint="#ff8000"
-        android:layout_gravity="center"/>
 
     <View
         android:id="@+id/divider2"

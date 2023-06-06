@@ -63,12 +63,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         if (room.getBooked().equals("yes")){
 
             holder.isReserved.setVisibility(View.VISIBLE);
-            holder.bookingInfo.setVisibility(View.VISIBLE);
+            holder.maxDays.setText("Estancia reservada: " + room.getBookedDays() + " noches");
 
         }else{
 
             holder.isReserved.setVisibility(View.INVISIBLE);
-            holder.bookingInfo.setVisibility(View.INVISIBLE);
+            holder.maxDays.setText("Estancia máxima: " + room.getMaxDays() + " noches");
 
         }
 
@@ -93,8 +93,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         //Elementos del recycler
         private ImageView roomImage;
-        private TextView roomTitle, roomCity, roomPrice, roomDescription, isReserved;
-        private Button bookingInfo;
+        private TextView roomTitle, roomCity, roomPrice, roomDescription, isReserved, maxDays;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -105,7 +104,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             roomPrice = itemView.findViewById(R.id.postPrice);
             roomDescription = itemView.findViewById(R.id.postDescription);
             isReserved = itemView.findViewById(R.id.isReserved);
-            bookingInfo = itemView.findViewById(R.id.bookingInfo);
+            maxDays = itemView.findViewById(R.id.maxDaysAvailable);
 
         }
     }

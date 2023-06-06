@@ -141,7 +141,7 @@
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
                 android:ems="10"
-                android:text="Precio"
+                android:text="Precio final:"
                 android:inputType="text"
                 android:padding="10dp" />
 

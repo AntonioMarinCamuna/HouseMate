@@ -83,7 +83,7 @@ public class UserInfoActivity extends AppCompatActivity {
     //Elementos Dialog
     private Button cancelButton;
     private ImageView roomImagePicker;
-    private TextView postTitle, postCity, postAddress, postDescription, postPrice;
+    private TextView postTitle, postCity, postAddress, postDescription, postPrice, bookedBy;
     private Dialog dialog;
 
     @Override
@@ -194,7 +194,7 @@ public class UserInfoActivity extends AppCompatActivity {
         dialog = new Dialog(UserInfoActivity.this);
 
         LayoutInflater inflater = this.getLayoutInflater();
-        View customDialog = inflater.inflate(R.layout.fragment_booked_post, null);
+        View customDialog = inflater.inflate(R.layout.fragment_owned_posts, null);
 
         postTitle = customDialog.findViewById(R.id.roomTitle);
         postCity = customDialog.findViewById(R.id.roomCity);
@@ -202,18 +202,33 @@ public class UserInfoActivity extends AppCompatActivity {
         postAddress = customDialog.findViewById(R.id.roomAddress);
         postPrice = customDialog.findViewById(R.id.roomPrice);
         roomImagePicker = customDialog.findViewById(R.id.roomImage);
+        bookedBy = customDialog.findViewById(R.id.bookedBy);
 
         cancelButton = customDialog.findViewById(R.id.bookButton);
-        cancelButton.setText("Eliminar habitación");
 
         String postId = room.getPostId();
 
-        postTitle.setText(room.getTitle().toString());
-        postCity.setText(room.getCity().toString());
-        postAddress.setText(room.getAddress().toString());
-        postDescription.setText(room.getDescription().toString());
+        postTitle.setText(room.getTitle());
+        postCity.setText(room.getCity());
+        postAddress.setText(room.getAddress());
+        postDescription.setText(room.getDescription());
 
-        postPrice.setText(room.getPrice().toString());
+        dbReference.child("Users").child(room.getBookedBy()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                User user = snapshot.getValue(User.class);
+                bookedBy.setText(user.getName());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        postPrice.setText(room.getPrice());
 
         Glide.with(roomImagePicker.getContext()).load(room.getImage()).into(roomImagePicker);
 
