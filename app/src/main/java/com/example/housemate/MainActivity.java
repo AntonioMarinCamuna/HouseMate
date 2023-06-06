@@ -34,6 +34,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Room> roomList;
     private Button searchButton;
     private TextView cityFilter, priceFilter;
+    private ImageView userProfileButton, mainPageButton, myBookingsButton;
 
     //Elementos PublishDialog
     private Uri uri = null;
@@ -83,8 +85,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().hide();
-
         dbReference = FirebaseDatabase.getInstance().getReference();
 
         postRecycler = findViewById(R.id.postRecycler);
@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
 
         cityFilter = findViewById(R.id.cityFilter);
         priceFilter = findViewById(R.id.priceFilter);
+
+        userProfileButton = findViewById(R.id.userProfile);
+        mainPageButton = findViewById(R.id.mainMenu);
+        myBookingsButton = findViewById(R.id.myBookings);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -128,6 +132,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openPublishDialog();
+            }
+        });
+
+        userProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(MainActivity.this, UserInfoActivity.class);
+                startActivity(i);
+
             }
         });
 
@@ -182,10 +196,14 @@ public class MainActivity extends AppCompatActivity {
 
                 }else {
 
+                    String bookingUser = mAuth.getCurrentUser().getUid();
+
                     room.setBooked("yes");
+                    room.setBookedBy(bookingUser);
 
                     HashMap Room = new HashMap();
                     Room.put("booked", "yes");
+                    Room.put("bookedBy", bookingUser);
 
                     dbReference.child("Posts").child(postId).updateChildren(Room).addOnCompleteListener(new OnCompleteListener() {
                         @Override
@@ -194,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
                             if(task.isSuccessful()){
 
                                 Toast.makeText(MainActivity.this, "Habitacion reservada con exito", Toast.LENGTH_SHORT).show();
+                                dialog.cancel();
 
                             }
 
@@ -371,6 +390,7 @@ public class MainActivity extends AppCompatActivity {
         map.put("publisherId", publisherId);
         map.put("image", postImage);
         map.put("booked", "no");
+        map.put("bookedBy", "");
         map.put("postId", postImgName);
 
         dbReference.child("Posts").child(postImgName).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {

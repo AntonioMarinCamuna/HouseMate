@@ -62,7 +62,7 @@
             </androidx.cardview.widget.CardView>
 
             <EditText
-                android:id="@+id/nombre"
+                android:id="@+id/userName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -72,33 +72,33 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/correo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/custom_imput"
-                android:hint="Correo"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/contrasena"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/custom_imput"
-                android:hint="Contraseña"
-                android:inputType="textEmailAddress" />
-
-            <EditText
-                android:id="@+id/direccion"
+                android:id="@+id/userUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/custom_imput"
                 android:hint="Dirección"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/userMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/custom_imput"
+                android:hint="Correo"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/userPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/custom_imput"
+                android:hint="Contraseña"
                 android:inputType="textPassword" />
 
             <Space

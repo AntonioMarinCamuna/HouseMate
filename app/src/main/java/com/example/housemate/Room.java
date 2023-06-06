@@ -13,11 +13,7 @@ public class Room {
     private String image;
     private String booked;
     private String postId;
-
-    //private String image;
-    //private String roomId;
-
-    //private ArrayList<String> imageGallery;
+    private String bookedBy;
 
     public Room(){
 
@@ -96,4 +92,13 @@ public class Room {
     public void setPostId(String postId) {
         this.postId = postId;
     }
+
+    public String getBookedBy() {
+        return bookedBy;
+    }
+
+    public void setBookedBy(String bookedBy) {
+        this.bookedBy = bookedBy;
+    }
+
 }

@@ -11,9 +11,9 @@
 
         <LinearLayout
             android:id="@+id/imageLayout"
-            android:layout_width="120dp"
+            android:layout_width="105dp"
             android:layout_height="match_parent"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/postImage"
@@ -25,7 +25,7 @@
         <LinearLayout
             android:id="@+id/postInfo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -41,6 +41,7 @@
                     android:layout_height="wrap_content"
                     android:text="PlaceHolder"
                     android:textColor="@color/black"
+                    android:textSize="20dp"
                     android:layout_marginRight="10dp"/>
 
                 <TextView
@@ -54,29 +55,29 @@
             <LinearLayout
                 android:id="@+id/postContent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
                 <TextView
                     android:id="@+id/postDescription"
-                    android:layout_width="170dp"
+                    android:layout_width="161dp"
                     android:layout_height="wrap_content"
                     android:text="PlaceHolder" />
 
                 <TextView
                     android:id="@+id/postPrice"
-                    android:layout_width="30dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="PlaceHolder"
-                    android:layout_gravity="bottom"/>
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:text="PlaceHolder" />
 
                 <TextView
                     android:id="@+id/euro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="€/mes"
+                    android:text=" €/mes"
                     android:layout_gravity="bottom"/>
 
 

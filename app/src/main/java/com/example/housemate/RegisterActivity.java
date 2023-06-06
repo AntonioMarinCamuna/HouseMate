@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,8 +28,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -54,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity{
 
     private Uri uri = null;
 
-    private EditText name, email, password;
+    private EditText name, username, email, password;
     private String userImgName;
 
     private FirebaseFirestore mFirestore;
@@ -70,16 +74,15 @@ public class RegisterActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        getSupportActionBar().hide();
-
         //mFirestore = FirebaseFirestore.getInstance();
         dbReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         sReference = FirebaseStorage.getInstance().getReference();
 
-        name = findViewById(R.id.nombre);
-        email = findViewById(R.id.correo);
-        password = findViewById(R.id.contrasena);
+        name = findViewById(R.id.userName);
+        username = findViewById(R.id.userUsername);
+        email = findViewById(R.id.userMail);
+        password = findViewById(R.id.userPassword);
         btn_register = findViewById(R.id.btn_registro);
         imagenUser = findViewById(R.id.imgPicker);
 
@@ -88,10 +91,11 @@ public class RegisterActivity extends AppCompatActivity{
             public void onClick(View view) {
 
                 String nameUser = name.getText().toString().trim();
+                String usernameUser = username.getText().toString().trim();
                 String emailUser = email.getText().toString().trim();
                 String passUser = password.getText().toString().trim();
 
-                if (nameUser.isEmpty() || emailUser.isEmpty() || passUser.isEmpty()) {
+                if (nameUser.isEmpty() || usernameUser.isEmpty() || emailUser.isEmpty() || passUser.isEmpty()) {
 
                     Toast.makeText(RegisterActivity.this, "Complete los datos", Toast.LENGTH_SHORT).show();
 
@@ -103,25 +107,55 @@ public class RegisterActivity extends AppCompatActivity{
 
                     if(passUser.length() >= 6 & passUser.length() <= 12){
 
-                        userImgName = imgNameGenerator();
-
-                        sReference = FirebaseStorage.getInstance().getReference("images/" + userImgName);
-                        sReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        dbReference.child("Users").addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                registerUser(nameUser, emailUser, passUser);
+                                if(!checkUsername(usernameUser, snapshot)){
+
+                                    userImgName = imgNameGenerator();
+
+                                    sReference = FirebaseStorage.getInstance().getReference("images/" + userImgName);
+                                    sReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                            sReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+
+                                                    userImgName = uri.toString();
+                                                    registerUser(nameUser, usernameUser, emailUser, passUser);
+
+                                                }
+                                            });
+
+
+
+                                        }
+
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+
+                                            Toast.makeText(RegisterActivity.this, "Error al subir la imagen", Toast.LENGTH_SHORT).show();
+
+                                        }
+
+                                    });
+
+                                } else{
+
+                                    Toast.makeText(RegisterActivity.this, "Ese nombre de usuario ya está en uso.", Toast.LENGTH_SHORT).show();
+
+                                }
 
                             }
 
-                        }).addOnFailureListener(new OnFailureListener() {
                             @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                                Toast.makeText(RegisterActivity.this, "Error al subir la imagen", Toast.LENGTH_SHORT).show();
+                            public void onCancelled(@NonNull DatabaseError error) {
 
                             }
-
                         });
 
                     }
@@ -141,6 +175,23 @@ public class RegisterActivity extends AppCompatActivity{
             }
 
         });
+
+    }
+
+    private boolean checkUsername(String username, DataSnapshot dataSnapshot){
+
+        for (DataSnapshot ds : dataSnapshot.getChildren()){
+
+            User user = ds.getValue(User.class);
+
+            if(user.getUsername().equals(username)){
+
+                return true;
+
+            }
+
+        }
+        return false;
 
     }
 
@@ -183,7 +234,7 @@ public class RegisterActivity extends AppCompatActivity{
 
     );
 
-    private void registerUser(String nameUser, String emailUser, String passUser) {
+    private void registerUser(String nameUser, String usernameUser,String emailUser, String passUser) {
 
         mAuth.createUserWithEmailAndPassword(emailUser, passUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
@@ -195,6 +246,7 @@ public class RegisterActivity extends AppCompatActivity{
                     String id = mAuth.getCurrentUser().getUid();
                     Map<String, Object> map = new HashMap<>();
                     map.put("name", nameUser);
+                    map.put("username", usernameUser);
                     map.put("email", emailUser);
                     map.put("password", passUser);
                     map.put("img_name", userImgName);
@@ -213,7 +265,7 @@ public class RegisterActivity extends AppCompatActivity{
 
                             } else {
 
-                                Toast.makeText(RegisterActivity.this, "Error al crear la colección.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "Error al registrar el usuario, inténtelo de nuevo mas tarde.", Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -221,7 +273,7 @@ public class RegisterActivity extends AppCompatActivity{
 
                 }else {
 
-                    Toast.makeText(RegisterActivity.this, "Error al registrar el user.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Ese correo ya está en uso.", Toast.LENGTH_SHORT).show();
 
                 }
 

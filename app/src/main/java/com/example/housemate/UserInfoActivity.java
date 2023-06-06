@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -40,50 +41,35 @@ import java.io.IOException;
 
 public class UserInfoActivity extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
-    StorageReference sReference;
-    DatabaseReference dbReference;
+    private FirebaseAuth mAuth;
+    private StorageReference sReference;
+    private DatabaseReference dbReference;
 
-    TextView emailUser;
-    TextView fechaNacimientoUser;
-    TextView textView6;
-    String user;
-    ImageView avatarUsuario;
+    private TextView emailUser, userName, userUsername;
+    private ImageView userAvatar;
+    private String user;
 
-    Button cerrarSesionBtn;
+    private Button cerrarSesionBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
-        getSupportActionBar().hide();
-
         sReference = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        emailUser = findViewById(R.id.correoUsuario);
-        fechaNacimientoUser = findViewById(R.id.fechaNacimientoUsuario);
-        avatarUsuario = findViewById(R.id.avatarUsuario);
-        textView6 = findViewById(R.id.textView6);
+        userName = findViewById(R.id.userName);
+        emailUser = findViewById(R.id.userMail);
+        userAvatar = findViewById(R.id.userAvatar);
+        userUsername = findViewById(R.id.userUsername);
 
-        cerrarSesionBtn = findViewById(R.id.cerrarSesion);
+        cerrarSesionBtn = findViewById(R.id.logOut);
 
         user = mAuth.getCurrentUser().getUid();
 
         readData();
 
-        /*DocumentReference docRef = mFirestore.collection("Users").document(user);
-        docRef.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot document, @Nullable FirebaseFirestoreException error) {
-
-                emailUser.setText(document.getString("email"));
-                fechaNacimientoUser.setText(document.getString("name"));
-
-            }
-        });
-        /*/
         cerrarSesionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,29 +83,29 @@ public class UserInfoActivity extends AppCompatActivity {
 
     //Leer del realtime database info relacionada a un mensaje en específico.
 
-    public void readMessages(){
-
-        dbReference = FirebaseDatabase.getInstance().getReference("Posts");
-        dbReference.orderByChild("id").equalTo(user).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for(DataSnapshot d : snapshot.getChildren()){
-
-                    Post p = d.getValue(Post.class);
-                    textView6.setText(p.getId());
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
+//    public void readMessages(){
+//
+//        dbReference = FirebaseDatabase.getInstance().getReference("Posts");
+//        dbReference.orderByChild("id").equalTo(user).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                for(DataSnapshot d : snapshot.getChildren()){
+//
+//                    Post p = d.getValue(Post.class);
+//                    textView6.setText(p.getId());
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//    }
 
     public void readData(){
 
@@ -135,27 +121,30 @@ public class UserInfoActivity extends AppCompatActivity {
                         DataSnapshot dSnapshot = task.getResult();
 
                         emailUser.setText(String.valueOf(dSnapshot.child("email").getValue()));
-                        fechaNacimientoUser.setText(String.valueOf(dSnapshot.child("name").getValue()));
+                        userName.setText(String.valueOf(dSnapshot.child("name").getValue()));
+                        userUsername.setText(String.valueOf(dSnapshot.child("username").getValue()));
 
-                        sReference = FirebaseStorage.getInstance().getReference("images/" + dSnapshot.child("img_name").getValue().toString());
-                        try {
+                        Glide.with(userAvatar.getContext()).load(dSnapshot.child("img_name")).into(userAvatar);
 
-                            File localFile = File.createTempFile("tempfile", ".jpg");
-                            sReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-
-                                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                    avatarUsuario.setImageBitmap(bitmap);
-
-                                }
-                            });
-
-                        } catch (IOException e){
-
-                            e.printStackTrace();
-
-                        }
+//                        sReference = FirebaseStorage.getInstance().getReference("images/" + dSnapshot.child("img_name").getValue().toString());
+//                        try {
+//
+//                            File localFile = File.createTempFile("tempfile", ".jpg");
+//                            sReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                                @Override
+//                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//
+//                                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                                    userAvatar.setImageBitmap(bitmap);
+//
+//                                }
+//                            });
+//
+//                        } catch (IOException e){
+//
+//                            e.printStackTrace();
+//
+//                        }
 
 
                     }
