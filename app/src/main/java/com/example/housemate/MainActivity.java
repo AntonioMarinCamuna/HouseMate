@@ -49,6 +49,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -181,7 +182,16 @@ public class MainActivity extends AppCompatActivity {
         postTitle.setText(room.getTitle());
         postCity.setText(room.getCity());
         postDescription.setText(room.getDescription());
-        maximunDays.setText(room.getMaxDays() + " noches");
+
+        if(Locale.getDefault().getLanguage().equals("es")){
+
+            maximunDays.setText(room.getMaxDays() + " noches");
+
+        }else{
+
+            maximunDays.setText(room.getMaxDays() + " nights");
+
+        }
 
         dbReference.child("Users").child(room.getPublisherId()).child("name").addValueEventListener(new ValueEventListener() {
             @Override

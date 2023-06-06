@@ -14,6 +14,8 @@
     <string name="logout_button">Cerrar sesión</string>
     <string name="book_button">Reservar habitación</string>
     <string name="unbook_button">Cancelar reserva</string>
+    <string name="publish_button">Publicar</string>
+    <string name="cancel_button">Cancelar</string>
     <string name="delete_room_button">Eliminar habitación</string>
     <string name="search_button">Buscar</string>
 
@@ -23,6 +25,7 @@
     <string name="username_hint">Nombre de usuario</string>
     <string name="title_hint">Título</string>
     <string name="city_hint">Ciudad</string>
+    <string name="maximum_days_hint">Estancia máxima (días)</string>
     <string name="description_hint">Descripción (max. 150 caracteres)</string>
     <string name="address_hint">Dirección</string>
     <string name="price_hint">Precio</string>
@@ -41,4 +44,7 @@
     <string name="desired_days_text">Precio final:</string>
     <string name="reserved_text">Reservado</string>
     <string name="night_price_text"> €/noche</string>
+    <string name="booked_stay">Estancia reservada: </string>
+    <string name="night_text"> noches</string>
+
 </resources>

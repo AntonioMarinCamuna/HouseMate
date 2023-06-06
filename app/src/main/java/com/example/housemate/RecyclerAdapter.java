@@ -27,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
 
@@ -63,12 +64,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         if (room.getBooked().equals("yes")){
 
             holder.isReserved.setVisibility(View.VISIBLE);
-            holder.maxDays.setText("Estancia reservada: " + room.getBookedDays() + " noches");
+
+            if(Locale.getDefault().getLanguage().equals("es")){
+
+                holder.maxDays.setText("Estancia reservada: " + room.getBookedDays() + " noches");
+
+            }else{
+
+                holder.maxDays.setText("Booked stay: " + room.getBookedDays() + " nights");
+
+            }
 
         }else{
 
             holder.isReserved.setVisibility(View.INVISIBLE);
-            holder.maxDays.setText("Estancia máxima: " + room.getMaxDays() + " noches");
+
+            if(Locale.getDefault().getLanguage().equals("es")){
+
+                holder.maxDays.setText("Estancia máxima: " + room.getMaxDays() + " noches");
+
+            }else{
+
+                holder.maxDays.setText("Maximum stay: " + room.getMaxDays() + " nights");
+
+            }
 
         }
 
