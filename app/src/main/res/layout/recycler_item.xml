@@ -66,7 +66,7 @@
                         android:id="@+id/isReserved"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Reservado"
+                        android:text="@string/reserved_text"
                         android:visibility="invisible"/>
 
                 </LinearLayout>
@@ -110,7 +110,7 @@
                         android:id="@+id/euro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=" €/noche"/>
+                        android:text="@string/night_price_text"/>
 
                 </LinearLayout>
 

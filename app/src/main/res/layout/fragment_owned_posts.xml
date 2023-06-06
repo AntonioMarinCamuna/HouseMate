@@ -42,7 +42,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:text="Titulo del anuncio:"
+                android:text="@string/title_text"
                 android:textColor="@color/black"
                 android:padding="10dp"
                 android:layout_marginBottom="10dp"/>
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:textColor="@color/black"
-                android:text="Ciudad:"
+                android:text="@string/city_text"
                 android:padding="10dp"
                 android:layout_marginBottom="10dp"/>
 
@@ -87,7 +87,7 @@
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Descripcion:"
+                android:text="@string/description_text"
                 android:textColor="@color/black"
                 android:padding="10dp"/>
 
@@ -112,7 +112,7 @@
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Dirección:"
+                android:text="@string/address_text"
                 android:textColor="@color/black"
                 android:padding="10dp"/>
 
@@ -137,7 +137,7 @@
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Arrendatario:"
+                android:text="@string/booked_by_text"
                 android:textColor="@color/black"
                 android:padding="10dp"/>
 
@@ -166,7 +166,7 @@
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
                 android:ems="10"
-                android:text="Precio final:"
+                android:text="@string/final_price_text"
                 android:inputType="text"
                 android:padding="10dp" />
 
@@ -190,7 +190,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#ff8000"
-            android:text="Eliminar habitación"
+            android:text="@string/delete_room_button"
             android:layout_gravity="center"/>
 
     </LinearLayout>

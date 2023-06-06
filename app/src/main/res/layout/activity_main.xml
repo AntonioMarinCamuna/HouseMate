@@ -60,7 +60,7 @@
                         android:background="@drawable/custom_imput"
                         android:ems="10"
                         android:inputType="text"
-                        android:hint="Ciudad"
+                        android:hint="@string/city_hint"
                         android:padding="5dp"
                         android:layout_marginRight="20dp"/>
 
@@ -70,7 +70,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/custom_imput"
                         android:ems="10"
-                        android:hint="Precio max."
+                        android:hint="@string/max_price_hint"
                         android:inputType="number"
                         android:padding="5dp"/>
 
@@ -83,7 +83,7 @@
                     android:layout_marginBottom="10dp"
                     android:backgroundTint="#ff8000"
                     android:layout_gravity="center"
-                    android:text="Buscar" />
+                    android:text="@string/search_button" />
 
             </LinearLayout>
 

@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:background="@drawable/custom_imput"
-                android:hint="Contraseña"
+                android:hint="@string/password_hint"
                 android:inputType="textPassword" />
 
             <Space
@@ -71,7 +71,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/black"
-                    android:text="Registrarme" />
+                    android:text="@string/register_button" />
 
                 <Button
                     android:id="@+id/loginButton"
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="#ff8000"
-                    android:text="Iniciar sesión" />
+                    android:text="@string/login_button" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

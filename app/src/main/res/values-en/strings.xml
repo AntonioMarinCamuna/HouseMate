@@ -9,24 +9,24 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="login_button">Iniciar Sesión</string>
-    <string name="register_button">Registrarme</string>
-    <string name="logout_button">Cerrar sesión</string>
+    <string name="login_button">Log in</string>
+    <string name="register_button">Register</string>
+    <string name="logout_button">Log out</string>
     <string name="book_button">Reservar habitación</string>
     <string name="unbook_button">Cancelar reserva</string>
     <string name="delete_room_button">Eliminar habitación</string>
     <string name="search_button">Buscar</string>
 
-    <string name="mail_hint">Correo electrónico</string>
-    <string name="password_hint">Contraseña</string>
-    <string name="name_hint">Nombre completo</string>
-    <string name="username_hint">Nombre de usuario</string>
-    <string name="title_hint">Título</string>
-    <string name="city_hint">Ciudad</string>
-    <string name="description_hint">Descripción (max. 150 caracteres)</string>
-    <string name="address_hint">Dirección</string>
-    <string name="price_hint">Precio</string>
-    <string name="max_price_hint">Precio max.</string>
+    <string name="mail_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="name_hint">Full name</string>
+    <string name="username_hint">Username</string>
+    <string name="title_hint">Post title</string>
+    <string name="city_hint">City</string>
+    <string name="description_hint">Description (max. 150 characters)</string>
+    <string name="address_hint">Address</string>
+    <string name="price_hint">Price</string>
+    <string name="max_price_hint">Max. price</string>
 
     <string name="bookings_text">Mis reservas:</string>
     <string name="title_text">Título del anuncio:</string>
@@ -36,7 +36,6 @@
     <string name="final_price_text">Precio final:</string>
     <string name="price_text">Precio:</string>
     <string name="booked_by_text">Arrendatario:</string>
-    <string name="posted_by_text">Arrendador:</string>
     <string name="maximum_days_text">Estancia máxima:</string>
     <string name="desired_days_text">Precio final:</string>
     <string name="reserved_text">Reservado</string>

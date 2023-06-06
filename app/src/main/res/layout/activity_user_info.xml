@@ -95,19 +95,10 @@
                 android:gravity="end">
 
                 <Button
-                    android:id="@+id/changeUserData"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
-                    android:backgroundTint="#ff8000"
-                    android:text="Información"
-                    android:textSize="10dp" />
-
-                <Button
                     android:id="@+id/logOut"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Cerrar sesión"
+                    android:text="@string/logout_button"
                     android:backgroundTint="#ff8000"
                     android:textSize="10dp"/>
 
