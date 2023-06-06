@@ -90,17 +90,18 @@
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                android:padding="10dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
                 android:gravity="end">
 
                 <Button
                     android:id="@+id/changeUserData"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Modificar información"
+                    android:layout_marginRight="10dp"
                     android:backgroundTint="#ff8000"
-                    android:textSize="7dp"
-                    android:layout_marginRight="10dp"/>
+                    android:text="Información"
+                    android:textSize="10dp" />
 
                 <Button
                     android:id="@+id/logOut"
@@ -108,8 +109,7 @@
                     android:layout_height="match_parent"
                     android:text="Cerrar sesión"
                     android:backgroundTint="#ff8000"
-                    android:textSize="7dp"
-                    android:layout_marginRight="10dp"/>
+                    android:textSize="10dp"/>
 
             </LinearLayout>
 
@@ -144,7 +144,7 @@
         android:orientation="vertical" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/messagesRecycler"
+        android:id="@+id/postsRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

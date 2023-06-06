@@ -144,7 +144,7 @@ public class RegisterActivity extends AppCompatActivity{
 
                                     });
 
-                                } else{
+                                }else{
 
                                     Toast.makeText(RegisterActivity.this, "Ese nombre de usuario ya está en uso.", Toast.LENGTH_SHORT).show();
 
@@ -260,6 +260,7 @@ public class RegisterActivity extends AppCompatActivity{
 
                                 user.sendEmailVerification();
 
+                                finish();
                                 Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                                 startActivity(i);
 
