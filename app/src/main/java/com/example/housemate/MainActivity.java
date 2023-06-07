@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         View customDialog = inflater.inflate(R.layout.fragment_post_info, null);
 
-        //Asignación de los elemtos del Dialog a los elementos declarados globalmente.
+        //Asignación de los elementos del Dialog a los elementos declarados globalmente.
         postTitle = customDialog.findViewById(R.id.roomTitle);
         postCity = customDialog.findViewById(R.id.roomCity);
         postDescription = customDialog.findViewById(R.id.roomDescription);

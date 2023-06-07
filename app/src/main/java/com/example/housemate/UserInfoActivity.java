@@ -85,6 +85,7 @@ public class UserInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
+        //Asignación de los elementos del Activity a los elentos previamente declarados.
         sReference = FirebaseStorage.getInstance().getReference();
         dbReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -105,21 +106,24 @@ public class UserInfoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Room room) {
 
-                openPostDialog(room);
+                openPostDialog(room); //Llamada al método encargado demostrar un Dialog con información de una publicación.
 
             }
         });
 
         postRecycler.setAdapter(rAdapter);
 
-        loadRoom();
+        loadRoom(); //Llamada al método encargado de cargar en el RecyclerView todas las habitaciónes del usuario.
 
         logOutButton = findViewById(R.id.logOut);
 
         user = mAuth.getCurrentUser().getUid();
 
-        readData();
+        readData(); //Llamada al método encargado de leer los datos de información del usuario
 
+        /**
+         * Bloque de código encargado de cerrar la sesión del usuario. Nos enviará al LoginActivity
+         */
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +134,10 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Bloque de código encargado de enviarnos al MainActivity cuando el botón de navegación es
+         * presionado.
+         */
         mainPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +148,10 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Bloque de código encargado de enviarnos al MyBookingsActivity cuando el botón de navegación
+         * es presionado.
+         */
         myBookings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,25 +164,31 @@ public class UserInfoActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Método encargado de cargar todas las habitaciones publicadas por el usuario en el ReyclerView.
+     */
     private void loadRoom(){
 
+        /**
+         * Bloque de código encargado de buscar en la collección de Posts las habitaciones del usuario.
+         */
         dbReference.child("Posts").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 roomList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){ //Recorremos la lista de habitaciones.
 
                     Room room = dataSnapshot.getValue(Room.class);
 
-                    if(room.getPublisherId().equals(user)){
+                    if(room.getPublisherId().equals(user)){ //Obtenemos solo las que son del usuario actual.
 
-                        roomList.add(room);
+                        roomList.add(room); //Añadimos las habitaciones a la lista del RecyclerView.
 
                     }
 
                 }
-                rAdapter.notifyDataSetChanged();
+                rAdapter.notifyDataSetChanged(); //Notificamos al Recycler cada vez que se añada información.
 
             }
 
@@ -182,13 +200,21 @@ public class UserInfoActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * Método encargado de mostrar y gestionar un Dialog cuando se presiona un item del RecyclerView.
+     *
+     * @param room
+     */
     private void openPostDialog(Room room){
 
+        //Declaración y asignación del Dialog que se mostará por pantalla.
         dialog = new Dialog(UserInfoActivity.this);
 
         LayoutInflater inflater = this.getLayoutInflater();
         View customDialog = inflater.inflate(R.layout.fragment_owned_posts, null);
 
+        //Asignación de los elementos del Dialog a los elementos declarados globalmente.
         postTitle = customDialog.findViewById(R.id.roomTitle);
         postCity = customDialog.findViewById(R.id.roomCity);
         postDescription = customDialog.findViewById(R.id.roomDescription);
@@ -201,16 +227,20 @@ public class UserInfoActivity extends AppCompatActivity {
 
         String postId = room.getPostId();
 
+        //"Seteo" de datos obtenidos de la habitación a los elementos del Dialog.
         postTitle.setText(room.getTitle());
         postCity.setText(room.getCity());
         postAddress.setText(room.getAddress());
         postDescription.setText(room.getDescription());
 
+        /**
+         * Bloque de código encargado de añadir al Dialog información referente a la persona que ha realizado una reserva.
+         */
         dbReference.child("Users").child(room.getBookedBy()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                User user = snapshot.getValue(User.class);
+                User user = snapshot.getValue(User.class); //Obtenemos los datos del usuario obtenido.
                 bookedBy.setText(user.getName());
 
             }
@@ -225,30 +255,42 @@ public class UserInfoActivity extends AppCompatActivity {
 
         Glide.with(roomImagePicker.getContext()).load(room.getImage()).into(roomImagePicker);
 
+        /**
+         * Bloque de código encargado de eliminar una habitación de la colección siempre que esta
+         * no esté reservada.
+         */
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(!mAuth.getCurrentUser().getUid().equals(room.getPublisherId())){
+                if(!mAuth.getCurrentUser().getUid().equals(room.getPublisherId())){ //Comprobamos que la habitación publicada es nuestra.
 
                     Toast.makeText(UserInfoActivity.this, "No puedes eliminar una habitacion publicada por otra persona", Toast.LENGTH_SHORT).show();
 
                 }else {
 
-                    if (room.getBooked().equals("yes")){
+                    if (room.getBooked().equals("yes")){ //Comprobamos que la habitación no está reservada
 
                         Toast.makeText(UserInfoActivity.this, "No puedes borrar una habitación reservada", Toast.LENGTH_SHORT).show();
 
                     } else{
 
+                        /**
+                         * Bloque de código encargado de eliminar de la colección Posts la habitacione.
+                         */
                         dbReference.child("Posts").child(postId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                /**
+                                 * Buscamos la imagen del post en el Storage de Firebase y la eliminamos.
+                                 */
                                 sReference.child("roomsImages").child(room.getTitle()+room.getCity()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
 
                                         dialog.cancel();
+
+                                        //Una vez eliminada mostramos un mensaje informativo.
                                         Toast.makeText(UserInfoActivity.this, "Habitación eliminada correctamente", Toast.LENGTH_SHORT).show();
 
                                     }
@@ -264,14 +306,22 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         });
 
+        //Mostramos el Dialog por pantalla.
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(customDialog);
         dialog.show();
 
     }
 
+    /**
+     * Método encargado de leer información a cerca del usuario actual, que asigna esta información
+     * a los campos de texto de información del usuario del Activity
+     */
     public void readData(){
 
+        /**
+         * Bloque de código encargado de buscar en la colección al usuario actual.
+         */
         dbReference.child("Users").child(user).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
