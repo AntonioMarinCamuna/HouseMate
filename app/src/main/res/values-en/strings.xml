@@ -39,9 +39,10 @@
     <string name="final_price_text">Final price:</string>
     <string name="price_text">Price:</string>
     <string name="booked_by_text">Tenant:</string>
+    <string name="filter_by_text">Filter by:</string>
     <string name="posted_by_text">Lessor:</string>
     <string name="maximum_days_text">Maximum stay:</string>
-    <string name="desired_days_text">Final price:</string>
+    <string name="desired_days_text">Desired stay:</string>
     <string name="reserved_text">Booked</string>
     <string name="night_price_text"> €/night</string>
     <string name="booked_stay">Booked stay: </string>

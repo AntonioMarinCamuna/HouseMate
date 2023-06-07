@@ -54,19 +54,13 @@ import io.grpc.Context;
 public class RegisterActivity extends AppCompatActivity{
 
     private Button btn_register;
-    private Button selectorImg;
-
     private Uri uri = null;
 
     private EditText name, username, email, password;
     private String userImgName;
-
-    private FirebaseFirestore mFirestore;
     private DatabaseReference dbReference;
     private FirebaseAuth mAuth;
     private StorageReference sReference;
-    private String storage_path = "userImgs/";
-
     private CircleImageView imagenUser;
 
     @Override
@@ -74,7 +68,6 @@ public class RegisterActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //mFirestore = FirebaseFirestore.getInstance();
         dbReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         sReference = FirebaseStorage.getInstance().getReference();
@@ -263,6 +256,8 @@ public class RegisterActivity extends AppCompatActivity{
                                 FirebaseUser user = mAuth.getCurrentUser();
 
                                 user.sendEmailVerification();
+
+                                Toast.makeText(RegisterActivity.this, "Usuario registrado correctamente, se ha enviado un correo electrónico de verificiacón", Toast.LENGTH_SHORT).show();
 
                                 finish();
                                 Intent i = new Intent(RegisterActivity.this, LoginActivity.class);

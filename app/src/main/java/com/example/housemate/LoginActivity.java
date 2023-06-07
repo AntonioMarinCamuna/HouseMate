@@ -27,11 +27,9 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btn_register, btn_login;
-    EditText name, email, password;
-    TextView prueba;
-    FirebaseFirestore mFirestore;
-    FirebaseAuth mAuth;
+    private Button btn_register, btn_login;
+    private EditText email, password;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
