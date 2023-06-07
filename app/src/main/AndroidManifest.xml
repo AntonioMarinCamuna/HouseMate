@@ -17,12 +17,6 @@
             android:name=".MyBookingsActivity"
             android:exported="false" />
         <activity
-            android:name=".PublishingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PublishActivity"
-            android:exported="false" />
-        <activity
             android:name=".UserInfoActivity"
             android:exported="false">
             <meta-data

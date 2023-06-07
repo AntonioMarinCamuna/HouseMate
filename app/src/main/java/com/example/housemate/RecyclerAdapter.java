@@ -31,16 +31,26 @@ import java.util.Locale;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
 
+    //Elementos del RecyclerAdapter
     private Context context;
 
     private ArrayList<Room> roomList;
     private ItemClickListener mItemListener;
 
+    /**
+     *
+     * Constructor del RecyclerAdapter, encargado de asignar los valores pasados por parámetro a los elementos del Recycler.
+     *
+     * @param context
+     * @param roomList
+     * @param itemClickListener
+     */
     public RecyclerAdapter(Context context, ArrayList<Room> roomList, ItemClickListener itemClickListener) {
         this.context = context;
         this.roomList = roomList;
         this.mItemListener = itemClickListener;
     }
+
 
     @NonNull
     @Override
@@ -49,11 +59,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         return new RecyclerViewHolder(v);
     }
 
+    /**
+     *
+     * Método encargado de asignar información a un elemento del RecyclerView en base a su posición.
+     *
+     * @param holder The ViewHolder which should be updated to represent the contents of the
+     *        item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
 
-        Room room = roomList.get(position);
+        Room room = roomList.get(position); //Obtenemos la habitación por su posición
 
+        //Asignamos los valores de la habitación a los elementos definidos en el RecyclerViewHolder.
         Glide.with(holder.roomImage.getContext()).load(room.getImage()).into(holder.roomImage);
 
         holder.roomTitle.setText(room.getTitle());
@@ -61,10 +80,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         holder.roomPrice.setText(room.getPrice() + "");
         holder.roomDescription.setText(room.getDescription());
 
+        //Asignamos unos valores u otros en base a comprobar si está reservada o no.
         if (room.getBooked().equals("yes")){
 
             holder.isReserved.setVisibility(View.VISIBLE);
 
+            //Asignamos unos valores u otros en base al idioma del dispositivo.
             if(Locale.getDefault().getLanguage().equals("es")){
 
                 holder.maxDays.setText("Estancia reservada: " + room.getBookedDays() + " noches");
@@ -91,29 +112,48 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         }
 
+        //Este bloque de código establece un onClickListener al item de la lista de la posición actual.
         holder.itemView.setOnClickListener(view -> {
             mItemListener.onItemClick(roomList.get(position));
         });
 
     }
 
+    /**
+     *
+     * Método encargado de obtener el tamaño de la lista del RecyclewView.
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return roomList.size();
     }
 
+    /**
+     * Interfaz para el onItemClick.
+     */
     public interface ItemClickListener{
 
         void onItemClick(Room room);
 
     }
 
+    /**
+     * Clase RecyclerViewHolder con los elementos del cada item del RecyclerView.
+     */
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder{
 
         //Elementos del recycler
         private ImageView roomImage;
         private TextView roomTitle, roomCity, roomPrice, roomDescription, isReserved, maxDays;
 
+        /**
+         *
+         * Constructor del RecyclerViewHolder.
+         *
+         * @param itemView
+         */
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
 

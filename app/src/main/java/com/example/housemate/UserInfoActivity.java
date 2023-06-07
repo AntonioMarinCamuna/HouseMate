@@ -71,14 +71,8 @@ public class UserInfoActivity extends AppCompatActivity {
     private RecyclerAdapter rAdapter;
     private ArrayList<Room> roomList;
 
-    private Button logOutButton, dataChangeButton;
+    private Button logOutButton;
 
-//    //Elementos del dataChangeDialog
-//    private TextView userNameDialog, userPasswordDialog, userUsernameDialog;
-//    private ImageView userAvatarDialog;
-//    private Button dataChangeButtonDialog;
-//    private Uri uri = null;
-//    private String userImgName;
 
     //Elementos Dialog
     private Button cancelButton;
