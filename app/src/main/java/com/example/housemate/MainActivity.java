@@ -52,6 +52,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Clase MainActivity que extiende de AppCompatActivity. Esta es la encargada de gestionar la pantalla
+ * principal, declara los elementos de la misma y contiene todas las funciones necesarias para el funcionamiento
+ * de la app.
+ */
 public class MainActivity extends AppCompatActivity {
 
     //Elementos globales
@@ -82,6 +87,16 @@ public class MainActivity extends AppCompatActivity {
     private TextView postPublisher;
     private EditText desiredDays;
 
+    /**
+     *
+     * Método encargado de asignar valores y llamar a las funciones necesarias para que el
+     * programa funcione de manera correcta.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

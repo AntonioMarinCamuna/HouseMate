@@ -51,6 +51,11 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.grpc.Context;
 
+/**
+ * Clase RegisterActivity que extiende de AppCompatActivity, tiene relación directa con el activity
+ * dedicado al registro del usuario, en ella se declaran todos los elementos de la vista y todas las
+ * funciones y métodos relacionadas con ella.
+ */
 public class RegisterActivity extends AppCompatActivity{
 
     //Elementos del RegisterActivity
@@ -64,6 +69,16 @@ public class RegisterActivity extends AppCompatActivity{
     private StorageReference sReference;
     private CircleImageView imagenUser;
 
+    /**
+     *
+     * Método encargado de gestionar el funcionamiento de la vista, haciendo llamadas a los métodos y funciones
+     * y asignando valores a los elementos previamente declarados.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

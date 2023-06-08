@@ -32,6 +32,12 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Clase MyBookingsActivity que extiende de AppCompatActivity, está directamente relacionada con el
+ * activity encargado de mostrar la información de las reservas hechas por el usuario. En ella se definen
+ * todos los elementos que se mostrarán a lo largo de la vista y contiene métodos y funciones definidas
+ * en el código.
+ */
 public class MyBookingsActivity extends AppCompatActivity {
 
     //Elementos globales
@@ -52,6 +58,17 @@ public class MyBookingsActivity extends AppCompatActivity {
     private TextView postTitle, postCity, postAddress, postDescription, postPrice;
     private Dialog dialog;
 
+    /**
+     *
+     * Método que actúa cuando se lanza el activity que lo contiene. Se encarga de asignar valores a
+     * los elementos definidos globalmente y de llamar a las funciones definidas en la clase para
+     * llevar a cabo las tareas que debe realizas.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

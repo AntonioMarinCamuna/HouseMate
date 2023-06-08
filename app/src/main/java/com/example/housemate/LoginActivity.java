@@ -25,6 +25,10 @@ import com.google.firebase.ktx.Firebase;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Clase LoginActivity que extiende de AppCompatActivity. Es la encargada de almacenar todos los
+ * elementos y funciones necesarias para el correcto funcionamiento de la vista.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     //Elementos utilizados en el activity
@@ -32,6 +36,16 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email, password;
     private FirebaseAuth mAuth;
 
+    /**
+     *
+     * Método encargado de realizar toda la tarea de la vista, gestionando los elementos y realizando
+     * las llamadas pertinentes a las funciones que permiten el funcionamiento de la app.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

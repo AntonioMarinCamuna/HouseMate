@@ -56,6 +56,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Clase UserInfoActivity que extiende de AppCompatActivity, contiene todos los elementos del activity
+ * relacionado con el perfíl de usuario, así como las funciones necesarias para hacerlo funcionar correctamente.
+ */
 public class UserInfoActivity extends AppCompatActivity {
 
     //Elementos de UserInfoActivity
@@ -80,6 +84,16 @@ public class UserInfoActivity extends AppCompatActivity {
     private TextView postTitle, postCity, postAddress, postDescription, postPrice, bookedBy;
     private Dialog dialog;
 
+    /**
+     *
+     * Método que se llama cuando se lanza dicho activity, contiene toda la información relacionada
+     * con el funcionamiento de dicho Activity, llamadas a métodos, declaración de variables y elementos.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

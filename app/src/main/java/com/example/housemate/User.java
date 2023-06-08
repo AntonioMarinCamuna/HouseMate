@@ -1,5 +1,9 @@
 package com.example.housemate;
 
+/**
+ * Clase usuario que permitirá almacenar en un objeto del tipo User información obtenida sobre un
+ * usuario de la BD.
+ */
 public class User {
 
     //Elementos del objeto User, deben tener el mismo nombre que en la colección de la BD.

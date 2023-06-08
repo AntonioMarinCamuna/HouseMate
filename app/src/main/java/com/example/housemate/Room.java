@@ -2,6 +2,9 @@ package com.example.housemate;
 
 import java.util.ArrayList;
 
+/**
+ * Clase habitación que permitirá almacenar y manejar información sobre una habitación obtenida de la BD.
+ */
 public class Room {
 
     //Elementos del objeto Room, deben tener el mismo nombre que en la colección de la BD.
