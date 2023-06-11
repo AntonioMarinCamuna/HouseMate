@@ -47,4 +47,31 @@
     <string name="night_price_text"> €/night</string>
     <string name="booked_stay">Booked stay: </string>
     <string name="night_text"> nights</string>
+
+    <string name="toast_1">Fill all the data</string>
+    <string name="toast_2">You must verify your mail</string>
+    <string name="toast_3">Wrong credentials</string>
+    <string name="toast_4">Error at sign in.</string>
+
+    <string name="toast_5">You can not book a room posted by yourself.</string>
+    <string name="toast_6">You must put a minimum of days.</string>
+    <string name="toast_7">Room booked succesfully.</string>
+    <string name="toast_8">The number of days written is not valid.</string>
+
+    <string name="toast_9">Book canceled succesfully.</string>
+
+    <string name="toast_10">Fill al the data.</string>
+    <string name="toast_11">You must choose an user image.</string>
+    <string name="toast_12">Error at uploading the image.</string>
+    <string name="toast_13">That username is already used.</string>
+    <string name="toast_14">The password must be at least 6 characters.</string>
+    <string name="toast_15">Action canceled by the user.</string>
+    <string name="toast_16">Sign up succesfully, a confirmation email has been sent.</string>
+    <string name="toast_17">Error at registering the user, please try again later.</string>
+    <string name="toast_18">That mail is already used.</string>
+
+    <string name="toast_19">You can´t delete a post published by other user.</string>
+    <string name="toast_20">You can´t delete a post that is booked.</string>
+    <string name="toast_21">Room deleted succesfully.</string>
+
 </resources>

@@ -282,13 +282,13 @@ public class UserInfoActivity extends AppCompatActivity {
 
                 if(!mAuth.getCurrentUser().getUid().equals(room.getPublisherId())){ //Comprobamos que la habitación publicada es nuestra.
 
-                    Toast.makeText(UserInfoActivity.this, "No puedes eliminar una habitacion publicada por otra persona", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserInfoActivity.this, getString(R.string.toast_19), Toast.LENGTH_SHORT).show();
 
                 }else {
 
                     if (room.getBooked().equals("yes")){ //Comprobamos que la habitación no está reservada
 
-                        Toast.makeText(UserInfoActivity.this, "No puedes borrar una habitación reservada", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserInfoActivity.this, getString(R.string.toast_20), Toast.LENGTH_SHORT).show();
 
                     } else{
 
@@ -308,7 +308,7 @@ public class UserInfoActivity extends AppCompatActivity {
                                         dialog.cancel();
 
                                         //Una vez eliminada mostramos un mensaje informativo.
-                                        Toast.makeText(UserInfoActivity.this, "Habitación eliminada correctamente", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(UserInfoActivity.this, getString(R.string.toast_21), Toast.LENGTH_SHORT).show();
 
                                     }
                                 });

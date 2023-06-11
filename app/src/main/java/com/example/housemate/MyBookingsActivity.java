@@ -199,7 +199,7 @@ public class MyBookingsActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
 
                             //Mensaje de confirmación de cancelación de reserva.
-                            Toast.makeText(MyBookingsActivity.this, "Reserva cancelada con exito", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyBookingsActivity.this, getString(R.string.toast_9), Toast.LENGTH_SHORT).show();
                             dialog.cancel();
 
                         }

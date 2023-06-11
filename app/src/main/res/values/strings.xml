@@ -48,4 +48,30 @@
     <string name="booked_stay">Estancia reservada: </string>
     <string name="night_text"> noches</string>
 
+    <string name="toast_1">Completa los datos</string>
+    <string name="toast_2">Debes verificar el correo electrónico</string>
+    <string name="toast_3">Credenciales erroneas</string>
+    <string name="toast_4">Error al iniciar sesión.</string>
+
+    <string name="toast_5">No puedes reservar una habitacion publicada por ti.</string>
+    <string name="toast_6">Debes introducir un número de días.</string>
+    <string name="toast_7">Habitación reservada con éxito.</string>
+    <string name="toast_8">El número de días introducido no es válido.</string>
+
+    <string name="toast_9">Reserva cancelada con éxito.</string>
+
+    <string name="toast_10">Completa los datos.</string>
+    <string name="toast_11">Debes seleccionar una imagen de usuario.</string>
+    <string name="toast_12">Error al subir la imagen.</string>
+    <string name="toast_13">Ese nombre de usuario ya está en uso.</string>
+    <string name="toast_14">La contraseña debe ser de al menos 6 caracteres.</string>
+    <string name="toast_15">Acción cancelada por el usuario.</string>
+    <string name="toast_16">Registro completado con éxito, se ha enviado un correo de verificación.</string>
+    <string name="toast_17">Error al registrar el usuario, inténtalo de nuevo mas tarde.</string>
+    <string name="toast_18">Ese correo ya está en uso.</string>
+
+    <string name="toast_19">No puedes eliminar una habitación publicada por otra persona.</string>
+    <string name="toast_20">No puedes reservar una habitación reservada .</string>
+    <string name="toast_21">Habitación eliminada correctamente.</string>
+
 </resources>

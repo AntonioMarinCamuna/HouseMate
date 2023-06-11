@@ -113,11 +113,11 @@ public class RegisterActivity extends AppCompatActivity{
                 //Comprobamos que los campos de texto no están vacíos.
                 if (nameUser.isEmpty() || usernameUser.isEmpty() || emailUser.isEmpty() || passUser.isEmpty()) {
 
-                    Toast.makeText(RegisterActivity.this, "Complete los datos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, getString(R.string.toast_10), Toast.LENGTH_SHORT).show();
 
                 }else if (uri == null){ //Comprobamos que se ha seleccionado una imagen de usuario.
 
-                    Toast.makeText(RegisterActivity.this, "Debes elegir una imagen de usuario", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, getString(R.string.toast_11), Toast.LENGTH_SHORT).show();
 
                 }else{
 
@@ -167,7 +167,7 @@ public class RegisterActivity extends AppCompatActivity{
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
 
-                                            Toast.makeText(RegisterActivity.this, "Error al subir la imagen", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegisterActivity.this, getString(R.string.toast_12), Toast.LENGTH_SHORT).show();
 
                                         }
 
@@ -175,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity{
 
                                 }else{ //Caso en el que el usuario ya existe.
 
-                                    Toast.makeText(RegisterActivity.this, "Ese nombre de usuario ya está en uso.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegisterActivity.this, getString(R.string.toast_13), Toast.LENGTH_SHORT).show();
 
                                 }
 
@@ -189,7 +189,7 @@ public class RegisterActivity extends AppCompatActivity{
 
                     } else{ //Caso en el que la contraseña no sea válida.
 
-                        Toast.makeText(RegisterActivity.this, "La contraseña debe ser de al menos 6 caracteres y máximo 12.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, getString(R.string.toast_14), Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -283,7 +283,7 @@ public class RegisterActivity extends AppCompatActivity{
 
                     }else { //Caso de no obtener imagen de vuelta en el intent.
 
-                        Toast.makeText(RegisterActivity.this, "Accion cancelada por el usuario", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, getString(R.string.toast_15), Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -337,7 +337,7 @@ public class RegisterActivity extends AppCompatActivity{
 
                                 user.sendEmailVerification(); //Enviamos el correo de confirmación al correo registrado.
 
-                                Toast.makeText(RegisterActivity.this, "Usuario registrado correctamente, se ha enviado un correo electrónico de verificiacón", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, getString(R.string.toast_16), Toast.LENGTH_SHORT).show();
 
                                 finish(); //Finalizamos este Activity
                                 Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -345,7 +345,7 @@ public class RegisterActivity extends AppCompatActivity{
 
                             } else { //Error al registrar el usuario.
 
-                                Toast.makeText(RegisterActivity.this, "Error al registrar el usuario, inténtelo de nuevo mas tarde.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, getString(R.string.toast_17), Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -353,7 +353,7 @@ public class RegisterActivity extends AppCompatActivity{
 
                 }else { //Caso en el que el correo electrónico ya esté en uso.
 
-                    Toast.makeText(RegisterActivity.this, "Ese correo ya está en uso.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, getString(R.string.toast_18), Toast.LENGTH_SHORT).show();
 
                 }
 

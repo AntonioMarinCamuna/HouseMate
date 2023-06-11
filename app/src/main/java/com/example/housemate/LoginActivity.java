@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 String passUser = password.getText().toString().trim();
 
                 if (emailUser.isEmpty() || passUser.isEmpty()) { //Comprobamos que la entrada de datos no están vacías
-                    Toast.makeText(LoginActivity.this, "Complete los datos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.toast_1), Toast.LENGTH_SHORT).show();
                 } else {
                     loginUser(emailUser, passUser); //Llamada al método encargado de iniciar sesión con los datos pasados por parámetro
                 }
@@ -144,21 +144,21 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
 
                         //Mensaje informando de la necesida de verificar el correo electrónico.
-                        Toast.makeText(LoginActivity.this, "Debes verificar el correo electrónico", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, getString(R.string.toast_2), Toast.LENGTH_SHORT).show();
 
                     }
 
                 } else {
 
                     //Mensaje que indica que los datos introducidos no son válidos.
-                    Toast.makeText(LoginActivity.this, "Credenciales erróneas.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.toast_3), Toast.LENGTH_SHORT).show();
 
                 }
             }
         }).addOnFailureListener(new OnFailureListener() { //Caso en el que el inicio de sesión falla.
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LoginActivity.this, "Error al iniciar.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.toast_4), Toast.LENGTH_SHORT).show();
             }
         });
     }

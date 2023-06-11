@@ -41,7 +41,7 @@
                 android:background="@drawable/custom_imput"
                 android:padding="10dp"
                 android:layout_marginBottom="10dp"
-                android:hint="Correo"
+                android:hint="@string/mail_hint"
                 android:inputType="textEmailAddress" />
 
             <EditText

@@ -277,14 +277,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if(mAuth.getCurrentUser().getUid().equals(room.getPublisherId())){ //Comprobamos que la persona que intenta hacer la reserva no es la misma que lo publica.
 
-                    Toast.makeText(MainActivity.this, "No puedes reservar una habitacion publicada por ti", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.toast_5), Toast.LENGTH_SHORT).show();
 
                 }else {
 
                     //Comprobamos que los datos introducidos no están vacíos
                     if(desiredDays.getText().toString().equals("") || desiredDays.getText().toString().equals(" ")){
 
-                        Toast.makeText(MainActivity.this, "Debes introducir un numero de dias si quieres realizar la reserva.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.toast_6), Toast.LENGTH_SHORT).show();
 
                     }else{
 
@@ -313,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     if(task.isSuccessful()){
 
-                                        Toast.makeText(MainActivity.this, "Habitacion reservada con exito", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MainActivity.this, getString(R.string.toast_7), Toast.LENGTH_SHORT).show();
                                         dialog.cancel();
 
                                     }
@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }else{ //Caso en el que el número de días introducido no es válido.
 
-                            Toast.makeText(MainActivity.this, "El numero de dias introducidos no es valido.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.toast_8), Toast.LENGTH_SHORT).show();
 
                         }
 
