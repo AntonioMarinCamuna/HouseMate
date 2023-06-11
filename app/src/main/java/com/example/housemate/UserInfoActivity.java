@@ -143,6 +143,9 @@ public class UserInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 finish();
+
+                mAuth.signOut();
+
                 startActivity(new Intent(UserInfoActivity.this, LoginActivity.class));
 
             }

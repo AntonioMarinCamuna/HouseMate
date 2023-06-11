@@ -141,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                roomList.clear(); //Línea de código encargada de limpiar la lista cada vez que se hace una búsqueda. TODO
+
                 if (priceFilter.getText().toString().isEmpty()){ //Caso en el que los filtros están vacíos
 
                     loadRoom(cityFilter.getText().toString(), "0"); //Llamada al método encargado de buscar las habitaciones.

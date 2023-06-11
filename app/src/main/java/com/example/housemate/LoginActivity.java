@@ -59,6 +59,15 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.loginButton);
         btn_register = findViewById(R.id.registerButton);
 
+        /**
+         * Bloque de código encargado de saltarse el login si ya hay un user con una sesión iniciada. TODO
+         */
+        if(mAuth.getCurrentUser() != null){
+
+            finish();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+        }
 
         /**
          * Bloque de código encargado de actuar cuando el botón de login
@@ -94,6 +103,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * Método encargado de cerrar la app en caso de dar atrás en el Login. TODO
+     */
+    @Override
+    public void onBackPressed() {
+        finish();
+        moveTaskToBack(true);
     }
 
     /**
